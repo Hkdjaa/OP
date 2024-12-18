@@ -1,3 +1,4 @@
+<!-- resources/views/lost-items/create.blade.php -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -48,10 +49,6 @@
             font-size: 16px;
         }
 
-        input[type="text"], input[type="date"] {
-            width: 100%;
-        }
-
         textarea {
             resize: vertical;
             height: 100px;
@@ -76,19 +73,6 @@
             text-align: center;
             margin-bottom: 15px;
         }
-
-        a {
-            text-align: center;
-            display: block;
-            margin-top: 15px;
-            color: #007BFF;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
     </style>
 </head>
 <body>
@@ -100,56 +84,58 @@
             <p class="success-message">{{ session('success') }}</p>
         @endif
 
-        <form action="{{ route('lost-items.store') }}" method="POST">
+        <form action="{{ route('lost-items.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <label for="name">Nom de l'objet</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" value="{{ old('name') }}" required>
 
             <label for="description">Description de l'objet</label>
-            <textarea id="description" name="description" required></textarea>
+            <textarea id="description" name="description" required>{{ old('description') }}</textarea>
 
             <label for="date_lost">Date de la perte</label>
-            <input type="date" id="date_lost" name="date_lost" required>
+            <input type="date" id="date_lost" name="date_lost" value="{{ old('date_lost') }}" required>
 
-            <label for="location">Lieu de la perte</label>
-            <input type="text" id="location" name="location" required>
+            <label for="place">Lieu de la perte</label>
+            <input type="text" id="place" name="place" value="{{ old('place') }}" required>
 
             <label for="category_id">Catégorie</label>
             <select id="category_id" name="category_id" required>
                 <option value="">Choisir une catégorie</option>
                 @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
                 @endforeach
             </select>
 
             <label for="subcategory_id">Sous-catégorie</label>
-            <select id="subcategory_id" name="subcategory_id" required>
+            <select id="subcategory_id" name="subcategory_id">
                 <option value="">Choisir une sous-catégorie</option>
             </select>
 
             <label for="phone_number">Numéro de téléphone</label>
-            <input type="text" id="phone_number" name="phone_number" required>
+            <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" required>
+
+            <label for="photo">Photo (optionnel)</label>
+            <input type="file" id="photo" name="photo">
 
             <button type="submit">Déclarer l'objet perdu</button>
         </form>
-
-        <br>
-        <a href="{{ route('lost-items.create') }}">Retour</a>
     </div>
 
     <script>
         document.getElementById('category_id').addEventListener('change', function() {
-            var categoryId = this.value;
-            var subcategorySelect = document.getElementById('subcategory_id');
+            const categoryId = this.value;
+            const subcategorySelect = document.getElementById('subcategory_id');
             subcategorySelect.innerHTML = '<option value="">Choisir une sous-catégorie</option>';
 
             if (categoryId) {
-                fetch('/api/subcategories/' + categoryId)
+                fetch(`/api/subcategories/${categoryId}`)
                     .then(response => response.json())
                     .then(data => {
                         data.forEach(subcategory => {
-                            var option = document.createElement('option');
+                            const option = document.createElement('option');
                             option.value = subcategory.id;
                             option.textContent = subcategory.name;
                             subcategorySelect.appendChild(option);

@@ -17,3 +17,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+
+use App\Models\Subcategory;
+
+Route::get('/subcategories/{category}', function ($categoryId) {
+    return Subcategory::where('category_id', $categoryId)->get();
+});
+
+
+
+Route::get('/api/subcategories/{categoryId}', function($categoryId) {
+    return App\Models\Subcategory::where('category_id', $categoryId)->get();
+});

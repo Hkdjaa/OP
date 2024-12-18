@@ -9,7 +9,17 @@ class LostItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'date_lost', 'location', 'category_id', 'subcategory_id', 'phone_number'];
+    protected $fillable = [
+        'name',
+        'description',
+        'date_lost',
+        'place',
+        'category_id',
+        'subcategory_id',
+        'user_id',
+        'phone_number',
+        'photo',
+    ];
 
     // Relation avec la catégorie
     public function category()
@@ -21,5 +31,11 @@ class LostItem extends Model
     public function subcategory()
     {
         return $this->belongsTo(Subcategory::class);
+    }
+
+    // Relation avec l'utilisateur
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
