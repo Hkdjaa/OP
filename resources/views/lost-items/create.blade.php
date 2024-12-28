@@ -1,149 +1,135 @@
-<!-- resources/views/lost-items/create.blade.php -->
-<!DOCTYPE html>
-<html lang="fr">
+@include('templates.vitrine.doctype')
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Déclarer un objet perdu</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+        <title>Déclarer une perte</title>
 
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-        }
+    </head>
 
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        label {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        input, textarea, select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        textarea {
-            resize: vertical;
-            height: 100px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .success-message {
-            color: green;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-    </style>
-</head>
 <body>
+<body class="topics-listing-page" id="top">
 
-    <div class="container">
-        <h1>Déclarer un objet perdu</h1>
+<main>
 
-        @if(session('success'))
-            <p class="success-message">{{ session('success') }}</p>
-        @endif
+        <!-- Navbar -->
+        @include('templates.vitrine.navbar')  
+        <!-- Navbar -->
 
-        <form action="{{ route('lost-items.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+            <header class="site-header d-flex flex-column justify-content-center align-items-center">
+                <div class="container">
+                    <div class="row align-items-center">
 
-            <label for="name">Nom de l'objet</label>
-            <input type="text" id="name" name="name" value="{{ old('name') }}" required>
+                        <div class="col-lg-5 col-12">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="../welcome.blade.php">Accueil</a></li>
 
-            <label for="description">Description de l'objet</label>
-            <textarea id="description" name="description" required>{{ old('description') }}</textarea>
+                                    <li class="breadcrumb-item active" aria-current="page">Déclarer une perte</li>
+                                </ol>
+                            </nav>
 
-            <label for="date_lost">Date de la perte</label>
-            <input type="date" id="date_lost" name="date_lost" value="{{ old('date_lost') }}" required>
+                            <h2 class="text-white">Déclarer une perte</h2>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
-            <label for="place">Lieu de la perte</label>
-            <input type="text" id="place" name="place" value="{{ old('place') }}" required>
+            <section class="section-padding section-bg">
+                <div class="container">
+                    <div class="row">
 
-            <label for="category_id">Catégorie</label>
-            <select id="category_id" name="category_id" required>
-                <option value="">Choisir une catégorie</option>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                        {{ $category->name }}
-                    </option>
-                @endforeach
-            </select>
+                        <div class="col-lg-12 col-12">
+                            <h3 class="mb-4 pb-2">Qu'avez-vous perdu?</h3>
+                        </div>
 
-            <label for="subcategory_id">Sous-catégorie</label>
-            <select id="subcategory_id" name="subcategory_id">
-                <option value="">Choisir une sous-catégorie</option>
-            </select>
+                        <div class="col-lg-6 col-12">
+                             @if(session('success'))
+                               <p class="success-message">{{ session('success') }}</p>
+                              @endif
 
-            <label for="phone_number">Numéro de téléphone</label>
-            <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" required>
+                             <form action="{{ route('lost-items.store') }}" method="POST" enctype="multipart/form-data" class="custom-form contact-form" role="form">
+                              @csrf
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-floating">
+                                            <input type="text" name="name" id="name" class="form-control" placeholder="Nom" value="{{ old('name') }}" required>
+                                        
+                                            <label for="name">Nom de l'objet</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-floating">
+                                            <input type="date" id="date_lost" max="{{ date('Y-m-d') }}" name="date_lost" value="{{ old('date_lost') }}" class="form-control" required>
+                                            
+                                            <label for="date_lost">Date de la perte</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-12">
+                                        <div class="form-floating">
+                                            <input type="text" id="place" class="form-control" name="place" value="{{ old('place') }}" placeholder="Lieu" required>
+                                            
+                                            <label for="place">Lieu de la perte</label>
+                                        </div>
+                                    </div>
 
-            <label for="photo">Photo (optionnel)</label>
-            <input type="file" id="photo" name="photo">
+                                    <div class="col-lg-6 col-md-6 col-12"> 
+                                        <div class="form-floating">
+                                            <textarea id="description" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Description" name="description" required>{{ old('description') }}</textarea>
+                                            
+                                            <label for="description">Description de l'objet</label></label>
+                                        </div>
+                                    </div>
 
-            <button type="submit">Déclarer l'objet perdu</button>
-        </form>
-    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-floating">
+                                            <select id="category_id" name="category_id" class="form-control" required>
+                                            <option value="">Choisir une catégorie</option>
+                                                @foreach($categories as $category)
+                                          <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                          </option>
+                                          @endforeach
+                                         </select>
+                                     <label for="category_id">Catégorie</label>
+                                     </div>
+                                    </div>
 
-    <script>
-        document.getElementById('category_id').addEventListener('change', function() {
-            const categoryId = this.value;
-            const subcategorySelect = document.getElementById('subcategory_id');
-            subcategorySelect.innerHTML = '<option value="">Choisir une sous-catégorie</option>';
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                     <div class="form-floating">
+                                     <select id="subcategory_id" name="subcategory_id" class="form-control" required>
+                                      <option value="">Choisir une sous-catégorie</option>
+                                      </select>      
+                                      <label for="subcategory_id">Sous-catégorie</label>                               
+                                      </div>
+                                    </div>
 
-            if (categoryId) {
-                fetch(`/api/subcategories/${categoryId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(subcategory => {
-                            const option = document.createElement('option');
-                            option.value = subcategory.id;
-                            option.textContent = subcategory.name;
-                            subcategorySelect.appendChild(option);
-                        });
-                    });
-            }
-        });
-    </script>
+                                        <div class="form-floating">
+                                            <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" class="form-control" placeholder="Numéro" required>
+                                        
+                                            <label for="phone_number">Numéro de téléphone</label>
+                                        </div>
+
+                                        <div class="form-floating">
+                                            <input type="file" id="photo" name="photo" class="form-control">
+                                        
+                                            <label for="photo">Photo (optionnel)</label>
+                                        </div>
+
+                                        <div class="col-lg-4 col-12 ms-auto">
+                                        <button type="submit" class="form-control">Publier</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+         <!-- Contact Section -->
+        @include('templates.vitrine.contact')  
+        <!-- Contact Section -->
+
+    <!-- Footer -->
+    @include('templates.vitrine.footer1')  
+    <!-- Footer -->
+
+    <!-- Script -->
+    @include('templates.vitrine.scriptsub')  
+    <!-- Script -->
 
 </body>
 </html>

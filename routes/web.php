@@ -1,95 +1,101 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\{
+    ProfileController,
+    CategoryController,
+    SubcategoryController,
+    LostItemController,
+    DeclarationController,
+    ObjetTrouveController
+};
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+// ========================
+// Routes publiques
+// ========================
+Route::get('/', fn () => view('welcome'))->name('home');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/dashboard', fn () => view('dashboard'))
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+// ========================
+// Authentification
+// ========================
+require __DIR__ . '/auth.php';
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect()->route('home'); // Redirige vers la page d'accueil
+})->name('logout');
+
+// ========================
+// Routes liées au profil (authentifié)
+// ========================
+Route::middleware('auth')->prefix('profile')->group(function () {
+    Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// ========================
+// Routes pour les catégories
+// ========================
+Route::prefix('categories')->group(function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/', [CategoryController::class, 'store'])->name('categories.store');
+    Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/{id}/subcategories', [CategoryController::class, 'showSubcategories'])->name('categories.subcategories');
 });
 
-require __DIR__.'/auth.php';
-
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\PasswordController;
-
-Route::middleware('guest')->group(function () {
-    // Route d'inscription
-    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-    Route::post('register', [RegisteredUserController::class, 'store']);
-
-    // Route de connexion
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+// ========================
+// Routes pour les sous-catégories
+// ========================
+Route::prefix('subcategories')->group(function () {
+    Route::get('/create', [SubcategoryController::class, 'create'])->name('subcategories.create');
+    Route::post('/', [SubcategoryController::class, 'store'])->name('subcategories.store');
+    Route::delete('/{id}', [SubcategoryController::class, 'destroy'])->name('subcategories.destroy');
 });
 
-Route::middleware('auth')->group(function () {
-    // Route de déconnexion
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+// ========================
+// Routes pour les objets perdus
+// ========================
+Route::prefix('lost-items')->group(function () {
+    Route::get('/', [LostItemController::class, 'index'])->name('lost-items.index');
+    Route::get('/create', [LostItemController::class, 'create'])->name('lost-items.create');
+    Route::post('/', [LostItemController::class, 'store'])->name('lost-items.store');
+    Route::get('/createAdmin', [LostItemController::class, 'createAdmin'])->name('lost-items.createAdmin');
+    Route::get('/{id}', [LostItemController::class, 'show'])->name('lostItem.detail');
+    Route::get('/{id}/edit', [LostItemController::class, 'edit'])->name('lost-items.edit');
+    Route::put('/{id}', [LostItemController::class, 'update'])->name('lost-items.update');
+Route::delete('/{id}', [LostItemController::class, 'destroy'])->name('lost-items.destroy');
 });
 
-
-
-
-
-
-
-
-Route::get('/', function () {
-    return view('welcome');
+// ========================
+// Routes pour les objets trouvés
+// ========================
+Route::prefix('objets-trouves')->group(function () {
+    Route::get('/create', [ObjetTrouveController::class, 'create'])->name('objets_trouves.create');
+    Route::post('/', [ObjetTrouveController::class, 'store'])->name('objets_trouves.store');
+    Route::get('/similar/{categorie_id}', [ObjetTrouveController::class, 'similar'])->name('objets_trouves.similar');
+    Route::get('/mes-objets', [ObjetTrouveController::class, 'myObjects'])->name('objets_trouves.my_objects');
+    Route::delete('/{id}', [ObjetTrouveController::class, 'destroy'])->name('objets_trouves.destroy');
 });
 
+// ========================
+// Routes admin protégées
+// ========================
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::get('/', fn () => view('admin'))->name('admin');
+});
 
-
-use App\Http\Controllers\CategoryController;
-
-// Route pour afficher le formulaire
-Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
-
-// Route pour soumettre le formulaire
-Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-
-
-
-
-use App\Http\Controllers\SubcategoryController;
-
-// Route pour afficher le formulaire
-Route::get('/subcategories/create', [SubcategoryController::class, 'create'])->name('subcategories.create');
-
-// Route pour soumettre le formulaire
-Route::post('/subcategories', [SubcategoryController::class, 'store'])->name('subcategories.store');
-
-
-
-use App\Http\Controllers\LostItemController;
-
-// Route pour afficher le formulaire de déclaration
-Route::get('/lost-items/create', [LostItemController::class, 'create'])->name('lost-items.create');
-
-// Route pour soumettre la déclaration
-Route::post('/lost-items', [LostItemController::class, 'store'])->name('lost-items.store');
-
-
-
+// ========================
+// Routes API (ex. récupération des sous-catégories dynamiquement)
+// ========================
+Route::prefix('api')->group(function () {
+    Route::get('/subcategories/{categoryId}', function ($categoryId) {
+        return App\Models\Subcategory::where('category_id', $categoryId)->get();
+    });
+});

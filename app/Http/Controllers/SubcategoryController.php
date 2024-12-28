@@ -34,4 +34,29 @@ class SubcategoryController extends Controller
         // Rediriger avec un message de succès
         return redirect()->route('subcategories.create')->with('success', 'Sous-catégorie ajoutée avec succès!');
     }
+
+
+    public function index($categoryId)
+    {
+        $category = Category::findOrFail($categoryId);
+        $subcategories = $category->subcategories; // Récupère les sous-catégories de la catégorie
+        
+        return view('subcategories.index', compact('category', 'subcategories'));
+    }
+    
+    
+
+
+
+    public function destroy($id)
+    {
+        $subcategory = Subcategory::findOrFail($id); // Trouve la sous-catégorie par son ID
+        $subcategory->delete(); // Supprime la sous-catégorie
+        
+        // Redirige avec un message de succès
+        return redirect()->route('categories.subcategories', $subcategory->category_id)
+                         ->with('success', 'Sous-catégorie supprimée avec succès.');
+    }
+    
+
 }
