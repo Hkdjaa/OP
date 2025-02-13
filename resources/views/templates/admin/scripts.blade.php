@@ -1,4 +1,24 @@
-<script src="{{ asset('js/app.min.js')}}"></script>
+<script>
+        document.getElementById('category_id').addEventListener('change', function() {
+            const categoryId = this.value;
+            const subcategorySelect = document.getElementById('subcategory_id');
+            subcategorySelect.innerHTML = '<option value="">Choisir une sous-catégorie</option>';
+
+            if (categoryId) {
+                fetch(`/api/subcategories/${categoryId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(subcategory => {
+                            const option = document.createElement('option');
+                            option.value = subcategory.id;
+                            option.textContent = subcategory.name;
+                            subcategorySelect.appendChild(option);
+                        });
+                    });
+            }
+        });
+    </script>
+	<script src="{{ asset('js/app.min.js')}}"></script>
 	<script src="{{ asset('js/theme/default.min.js' )}}"></script>
 	<!-- ================== END BASE JS ================== -->
 	
@@ -16,3 +36,4 @@
 	<script src="{{ asset('jplugins/highlight.js/highlight.min.js')}}"></script>
 	<script src="{{ asset('jjs/demo/render.highlight.js')}}"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -1,6 +1,6 @@
 @include('templates.admin.doctype')
 <head>
-	<title> Liste des objets perdus</title>
+	<title> Liste des objets trouvés</title>
 </head>
 <body>
 
@@ -20,11 +20,11 @@
 			<ol class="breadcrumb float-xl-right">
 				<li class="breadcrumb-item"><a href="javascript:;">Accueil</a></li>
 				<li class="breadcrumb-item"><a href="javascript:;">Tables</a></li>
-				<li class="breadcrumb-item active">Liste des objets perdus</li>
+				<li class="breadcrumb-item active">Liste des objets trouvés</li>
 			</ol>
 			<!-- end breadcrumb -->
 			<!-- begin page-header -->
-			<h1 class="page-header">Table - <small> Liste des objets perdus</small></h1>
+			<h1 class="page-header">Table - <small> Liste des objets trouvés</small></h1>
 			<!-- end page-header -->
 			<!-- begin row -->
 			<div class="row">
@@ -34,7 +34,7 @@
 					<div class="panel panel-inverse" data-sortable-id="table-basic-4">
 						<!-- begin panel-heading -->
 						<div class="panel-heading">
-							<h4 class="panel-title">Liste des objets perdus</h4>
+							<h4 class="panel-title">Liste des objets trouvés</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
@@ -67,7 +67,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($lostItems as $item)
+										@foreach($foundItems as $item)
 										<tr>
 											<td>{{ $item->name }}</td>
 											<td>{{ $item->description }}</td>
@@ -78,10 +78,10 @@
 											<td>{{ $item->phone_number }}</td>
 											<td>
                 <!-- Bouton Modifier -->
-                <a href="{{ route('lost-items.edit', $item->id) }}">Modifier</a>
+                <a href="{{ route('found-items.edit', $item->id) }}">Modifier</a>
 
                 <!-- Formulaire de suppression -->
-                <form action="{{ route('lost-items.destroy', $item->id) }}" method="POST" style="display: inline;">
+                <form action="{{ route('found-items.destroy', $item->id) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet objet ?')">Supprimer</button>

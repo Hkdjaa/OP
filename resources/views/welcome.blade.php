@@ -1,3 +1,4 @@
+@extends('layouts.app')
 @include('templates.vitrine.doctype')
 <head>
 <title>Pertena - Accueil</title>
@@ -9,19 +10,23 @@
         @include('templates.vitrine.navbar')  
         <!-- Navbar -->
         
-            <section class="hero-section" id="section_1" style="background-image: url('{{ asset('images/accueil2.jpg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-    <div class="container">
+    <section class="hero-section" id="section_1" style="background-image: url('{{ asset('images/accueil2.jpg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat; padding-top: 120px; position: relative;">
+    <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5);"></div>
+    <div class="container position-relative">
         <div class="row">
-            <!-- Alignement du contenu à gauche -->
             <div class="col-lg-8 col-12 text-start">
-                <!-- Nouveau texte modifié -->
-                <h1 class="text-white">Bienvenue sur Pertena</h1>
-                <h6 class="text-white">Une plateforme simple et efficace dédiée à </h6>
-                <h6> la déclaration et la recherche d'objets perdus et trouvés </h6>
-                <!-- Section des boutons -->
+                <h1 class="text-white display-4 fw-bold mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Bienvenue sur Pertena</h1>
+                <h5 class="text-white mb-4" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                    Une plateforme simple et efficace dédiée à<br>
+                    la déclaration et la recherche d'objets perdus et trouvés
+                </h5>
                 <div class="hero-buttons">
-                    <a href="{{ route('lost-items.create') }}" class="btn-declare-lost">Déclarer une perte</a>
-                    <a href="{{ route('objets_trouves.create') }}" class="btn-declare-found">Déclarer un objet trouvé</a>
+                    <a href="{{ route('lost-items.create') }}" class="btn custom-btn rounded-pill me-3 px-4">
+                        <i class="bi bi-search me-2"></i>Déclarer une perte
+                    </a>
+                    <a href="{{ route('found-items.create') }}" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                        <i class="bi bi-plus-circle me-2"></i>Déclarer un objet trouvé
+                    </a>
                 </div>
             </div>
         </div>
@@ -97,6 +102,59 @@
                 </div>
         </section>
 
+<section class="explore-section section-padding" id="section_2">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="mb-4">Objets perdus</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                @foreach($itemsByCategory as $categoryName => $items)
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link @if($loop->first) active @endif" id="{{ $categoryName }}-tab" data-bs-toggle="tab" data-bs-target="#{{ $categoryName }}-tab-pane" type="button" role="tab" aria-controls="{{ $categoryName }}-tab-pane" aria-selected="true">{{ ucfirst($categoryName) }}</button>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="tab-content" id="myTabContent">
+                    @foreach($itemsByCategory as $categoryName => $items)
+                        <div class="tab-pane fade @if($loop->first) show active @endif" id="{{ $categoryName }}-tab-pane" role="tabpanel" aria-labelledby="{{ $categoryName }}-tab" tabindex="0">
+                            <div class="row">
+                                @foreach($items as $item)
+                                    <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                                        <div class="custom-block bg-white shadow-lg">
+                                            <a href="{{ route('lost-items.show', $item->id) }}">
+                                                <div class="d-flex">
+                                                    <div>
+                                                        <h5 class="mb-2">{{ $item->name }}</h5>
+                                                        <p class="mb-0"> {{ $item->subcategory->name }}</p>
+                                                        <p class="mb-0">{{ $item->description }}</p>
+                                                        <p class="mb-0">Perdu le : {{ $item->date_lost }} | A : {{ $item->place }}</p>
+                                                    </div>
+                                                </div>
+                                                <img src="{{ asset('images/topics/lost-item-image.png') }}" class="custom-block-image img-fluid" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
         <!-- Comment ça marche -->
     <section class="timeline-section section-padding" id="section_2">

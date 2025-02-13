@@ -1,6 +1,6 @@
 @include('templates.admin.doctype')
 <head>
-	<title>Déclarer une perte</title>
+	<title>Déclarer un objet trouvé</title>
 </head>
 <body>
 
@@ -19,20 +19,20 @@
 		<div id="content" class="content">
 			<!-- begin breadcrumb -->
 			<ol class="breadcrumb float-xl-right">
-				<li class="breadcrumb-item"><a href="javascript:;">Accuei</a></li>
-				<li class="breadcrumb-item"><a href="javascript:;">Objets perdus</a></li>
+				<li class="breadcrumb-item"><a href="javascript:;">Accueil</a></li>
+				<li class="breadcrumb-item"><a href="javascript:;">Objets trouvés</a></li>
 				<li class="breadcrumb-item active">Ajouter</li>
 			</ol>
 			<!-- end breadcrumb -->
             <!-- begin row -->
 			<div class="row">
-         				<!-- begin col-6 -->
+         	<!-- begin col-6 -->
 				<div class="col-xl-6">
 					<!-- begin panel -->
 					<div class="panel panel-inverse" data-sortable-id="form-stuff-10">
 						<!-- begin panel-heading -->
 						<div class="panel-heading">
-							<h4 class="panel-title">Ajouter un objet perdu</h4>
+							<h4 class="panel-title">Ajouter un objet trouvé</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
@@ -46,7 +46,7 @@
                         @if(session('success'))
                                <p class="success-message">{{ session('success') }}</p>
                               @endif
-							<form action="{{ route('lost-items.store') }}" method="POST">
+							<form action="{{ route('found-items.store') }}" method="POST">
                             @csrf
 								<fieldset>
 									<legend class="m-b-15">Nouveau</legend>
@@ -55,11 +55,11 @@
 										<input type="text" name="name" id="name" class="form-control" placeholder="Nom" value="{{ old('name') }}" required />
 									</div>
                                     <div class="form-group">
-										<label for="date_lost">Date de la perte</label>
-										<input type="date" id="date_lost" name="date_lost" max="{{ date('Y-m-d') }}" value="{{ old('date_lost') }}" class="form-control" required />
+										<label for="date_found">Date de la trouvaille</label>
+										<input type="date" id="date_found" name="date_found" max="{{ date('Y-m-d') }}" value="{{ old('date_found') }}" class="form-control" required />
 									</div>
                                     <div class="form-group">
-										<label for="place">Lieu de la perte</label>
+										<label for="place">Lieu de la trouvaille</label>
 										<input type="text" id="place" class="form-control" name="place" value="{{ old('place') }}" placeholder="Lieu" required />
 									</div>
                                     <div class="form-group">

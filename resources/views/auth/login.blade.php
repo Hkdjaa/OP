@@ -80,6 +80,28 @@
     <!-- JS -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    @if(session('success'))
+        Swal.fire({
+            title: "Vous êtes connecté",
+            icon: "success",
+            draggable: true,
+            text: "Bienvenue dans l'interface administrateur",
+        });
+    @endif
+
+    @if(session('error'))
+        Swal.fire({
+            icon: "error",
+            title: "Vous êtes déconnecté",
+            text: "Reconnectez-vous pour accéder à l'interface administrateur",
+        });
+    @endif
+});
+</script>
+
 </body>
 
 </html>

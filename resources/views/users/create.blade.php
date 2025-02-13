@@ -1,8 +1,9 @@
 @include('templates.admin.doctype')
 <head>
-	<title>Création catégorie</title>
+	<title>Ajouter un utilisateur</title>
 </head>
 <body>
+
 	
 	<!-- begin #page-container -->
 	<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
@@ -19,7 +20,7 @@
 			<!-- begin breadcrumb -->
 			<ol class="breadcrumb float-xl-right">
 				<li class="breadcrumb-item"><a href="javascript:;">Accuei</a></li>
-				<li class="breadcrumb-item"><a href="javascript:;">Sous-catégories</a></li>
+				<li class="breadcrumb-item"><a href="javascript:;">Utilisateurs</a></li>
 				<li class="breadcrumb-item active">Ajouter</li>
 			</ol>
 			<!-- end breadcrumb -->
@@ -31,7 +32,7 @@
 					<div class="panel panel-inverse" data-sortable-id="form-stuff-10">
 						<!-- begin panel-heading -->
 						<div class="panel-heading">
-							<h4 class="panel-title">Ajouter une sous-catégorie</h4>
+							<h4 class="panel-title">Ajouter un utilisateur</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
@@ -43,15 +44,34 @@
 						<!-- begin panel-body -->
 						<div class="panel-body">
                         @if(session('success'))
-                        <p style="color: green;">{{ session('success') }}</p>
-                        @endif
-							<form action="{{ route('categories.store') }}" method="POST">
-                            @csrf
+                               <p class="success-message">{{ session('success') }}</p>
+                              @endif
+                              <form action="{{ route('users.store') }}" method="POST">
+                              @csrf
 								<fieldset>
-									<legend class="m-b-15">Nouvelle Catégorie</legend>
+									<legend class="m-b-15">Nouvel utilisateur</legend>
 									<div class="form-group">
-										<label for="name">Nom de la catégorie</label>
-										<input type="text" class="form-control" id="name" name="name" placeholder="Nom" required />
+                                        <label for="name" class="form-label">Nom</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nom" required>
+									</div>
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+									</div>
+                                    <div class="form-group">
+                                        <label for="password" class="form-label">Mot de passe</label>
+                                        <input type="password" class="form-control" id="password" name="password" required>
+									</div>
+                                    <div class="form-group">
+                                        <label for="password_confirmation" class="form-label">Confirmer le mot de passe</label>
+                                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+									</div>
+                                    <div class="form-group">
+                                        <label for="is_admin" class="form-label">Est admin</label>
+                                        <select class="form-select" id="is_admin" name="is_admin">
+                                            <option value="1">Oui</option>
+                                            <option value="0" selected>Non</option>
+                                        </select>
 									</div>
 									<button type="submit" class="btn btn-sm btn-primary m-r-5">Ajouter</button>
 								</fieldset>
@@ -66,6 +86,7 @@
             </div> 
             </div>
             <!-- end #content -->
+
 		<!-- begin theme-panel -->
 		@include('templates.admin.panel')
 		<!-- end theme-panel -->
@@ -76,8 +97,8 @@
 	</div>
 	<!-- end page container -->
 
-		<!-- ================== BEGIN BASE JS ================== -->
-		@include('templates.admin.scripts')
+	<!-- ================== BEGIN BASE JS ================== -->
+	@include('templates.admin.scripts')
 	<!-- ================== END PAGE LEVEL JS ================== -->
 </body>
 </html>

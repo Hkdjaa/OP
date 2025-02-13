@@ -21,7 +21,7 @@
 			<ol class="breadcrumb float-xl-right">
 				<li class="breadcrumb-item"><a href="javascript:;">Accueil</a></li>
 				<li class="breadcrumb-item"><a href="javascript:;">Tables</a></li>
-				<li class="breadcrumb-item active">Liste des objets perdus</li>
+				<li class="breadcrumb-item active">Liste des catégories</li>
 			</ol>
 			<!-- end breadcrumb -->
 			<!-- begin page-header -->
@@ -79,10 +79,6 @@
             </tbody>
         </table>
 
-        <!-- Bouton pour ajouter une catégorie -->
-        <a href="{{ route('categories.create') }}" class="btn btn-primary">Ajouter une catégorie</a>
-        <a href="{{ route('subcategories.create') }}" class="btn btn-primary">Ajouter une sous-catégorie</a>
-        <a href="{{ route('admin') }}" class="btn btn-primary">Administration</a>
     </div>
     </div>
 				<!-- end col-6 -->

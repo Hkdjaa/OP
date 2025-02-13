@@ -27,10 +27,10 @@
 						<div class="dropdown-header">NOTIFICATIONS (5)</div>
 						<a href="javascript:;" class="dropdown-item media">
 							<div class="media-left">
-								<i class="fa fa-bug media-object bg-silver-darker"></i>
+								<i class="fa fa-bell media-object bg-silver-darker"></i>
 							</div>
 							<div class="media-body">
-								<h6 class="media-heading">Server Error Reports <i class="fa fa-exclamation-circle text-danger"></i></h6>
+								<h6 class="media-heading">Mamadou a ajouté un nouvel objet perdu <i class="fa fa-plus-circle text-success"></i></h6>
 								<div class="text-muted f-s-10">3 minutes ago</div>
 							</div>
 						</a>
@@ -40,8 +40,8 @@
 								<i class="fab fa-facebook-messenger text-blue media-object-icon"></i>
 							</div>
 							<div class="media-body">
-								<h6 class="media-heading">John Smith</h6>
-								<p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
+								<h6 class="media-heading">Awa Diallo</h6>
+								<p>Je viens de retrouver un objet, merci de me contacter.</p>
 								<div class="text-muted f-s-10">25 minutes ago</div>
 							</div>
 						</a>
@@ -51,28 +51,27 @@
 								<i class="fab fa-facebook-messenger text-blue media-object-icon"></i>
 							</div>
 							<div class="media-body">
-								<h6 class="media-heading">Olivia</h6>
-								<p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
+								<h6 class="media-heading">Ibrahima Ba</h6>
+								<p>Un objet que j'ai déclaré perdu a été retrouvé !</p>
 								<div class="text-muted f-s-10">35 minutes ago</div>
 							</div>
 						</a>
 						<a href="javascript:;" class="dropdown-item media">
 							<div class="media-left">
-								<i class="fa fa-plus media-object bg-silver-darker"></i>
+								<i class="fa fa-user-plus media-object bg-silver-darker"></i>
 							</div>
 							<div class="media-body">
-								<h6 class="media-heading"> New User Registered</h6>
+								<h6 class="media-heading">Fatou Sow vient de s'inscrire</h6>
 								<div class="text-muted f-s-10">1 hour ago</div>
 							</div>
 						</a>
 						<a href="javascript:;" class="dropdown-item media">
 							<div class="media-left">
-								<i class="fa fa-envelope media-object bg-silver-darker"></i>
-								<i class="fab fa-google text-warning media-object-icon f-s-14"></i>
+								<i class="fa fa-sign-in media-object bg-silver-darker"></i>
 							</div>
 							<div class="media-body">
-								<h6 class="media-heading"> New Email From John</h6>
-								<div class="text-muted f-s-10">2 hour ago</div>
+								<h6 class="media-heading">Aliou Ndiaye vient de se connecter</h6>
+								<div class="text-muted f-s-10">2 hours ago</div>
 							</div>
 						</a>
 						<div class="dropdown-footer text-center">
@@ -82,15 +81,12 @@
 				</li>
 				<li class="dropdown navbar-user">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="{{ asset('images/user/user-13.jpg' ) }}" alt="" /> 
-                <span class="d-none d-md-inline">
-                    {{ Auth::user()->name }}
-                </span> <b class="caret"></b>
+				<i class="fa fa-user"></i>
+                <span class="d-none d-md-inline">{{ Auth::user()->name }} </span> <b class="caret"></b>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a href="javascript:;" class="dropdown-item"> Profil</a>
                 <a href="javascript:;" class="dropdown-item"><span class="badge badge-danger pull-right">2</span> Inbox</a>
-                <a href="javascript:;" class="dropdown-item">Calendrier</a>
                 <a href="javascript:;" class="dropdown-item">Paramètres</a>
                 <div class="dropdown-divider"></div>
                 

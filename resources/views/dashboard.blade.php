@@ -9,7 +9,7 @@
 		<!-- begin #header -->
 		@include('templates.admin.header')
 		<!-- end #header -->
-		
+	
 		<!-- begin #sidebar -->
 		@include('templates.admin.sidebar')
 		<!-- end #sidebar -->

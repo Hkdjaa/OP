@@ -42,29 +42,47 @@ class LostItemController extends Controller
         // Crée l'objet perdu dans la base de données
         LostItem::create($validated);
 
-        // Redirige avec un message de succès
+        // Vérifie si l'utilisateur est admin
+        if (auth()->user()->is_admin) {
+            return redirect()->route('lost-items.createAdmin')->with('success', 'Déclaration ajoutée avec succès!');
+        }
+
         return redirect()->route('lost-items.create')->with('success', 'Déclaration enregistrée avec succès.');
     }
 
 
-    
-
+    // Affichage pour la page admin (lost-items.index)
     public function index()
     {
-        // Récupérer les objets perdus et leur catégorie associée
-        $lostItems = LostItem::with('category')->get();
-    
-        // Retourner la vue avec les données
+        $lostItems = LostItem::all();  // Affiche tous les objets perdus pour l'admin
         return view('lost-items.index', compact('lostItems'));
     }
-    
 
+    // Affichage pour la page d'accueil (welcome.blade.php)
+    public function showByCategory()
+    {
+        // Récupère tous les objets perdus avec leurs catégories et sous-catégories
+        $lostItems = LostItem::with('category', 'subcategory')->get();
+
+        // Organiser les objets par catégorie
+        $itemsByCategory = [];
+
+        foreach ($lostItems as $item) {
+            // Ajouter les objets à leur catégorie respective
+            $itemsByCategory[$item->category->name][] = $item;
+        }
+        // Passer les objets organisés à la vue
+        return view('welcome', compact('itemsByCategory'));
+    }
+    
+    // Page de création pour l'interface admin
     public function createAdmin()
     {
         $categories = Category::all(); // Récupère toutes les catégories
         return view('lost-items.createAdmin', compact('categories'));
 
     }
+
     //MODIFIER UN OBJET PERDU
     public function edit($id)
 {
@@ -111,5 +129,12 @@ public function destroy($id)
 
     // Redirige avec un message de succès
     return redirect()->route('lost-items.index')->with('success', 'Objet perdu supprimé avec succès.');
+}
+public function show($id)
+{
+    // Récupère l'objet perdu par son ID
+    $lostItem = LostItem::with('category', 'subcategory', 'user')->findOrFail($id);
+
+    return view('lost-items.show', compact('lostItem'));
 }
 }

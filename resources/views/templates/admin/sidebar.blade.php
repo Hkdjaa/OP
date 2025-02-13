@@ -28,19 +28,20 @@
                 
 					<li class="has-sub">
 						<a href="javascript:;">
-							<span class="badge pull-right">10</span>
+							<b class="caret"></b>
 							<i class="fa fa-users"></i>
-							<span>Liste des utilisateurs</span>
+							<span>Utilisateurs</span>
 						</a>
 						<ul class="sub-menu">
-							<li><a href="email_inbox.html">Administrateurs</a></li>
-							<li><a href="email_compose.html">Users</a></li>
+							<li><a href="{{ route('users.index') }}">Liste des utilisateurs</a></li>
+							<li><a href="{{ route('users.create') }}">Ajouter un utilisateur</a></li>
+							<li><a href="{{ route('users.deleted') }}">Utilisateurs supprimés</a></li>
 						</ul>
 					</li>
 					<li>
-						<a href="widget.html">
+						<a href="{{ route('home') }}">
 							<i class="fab fa-simplybuilt"></i>
-							<span>Widgets <span class="label label-theme">NEW</span></span> 
+							<span>Site </span> 
 						</a>
 					</li>
 					<li class="has-sub">
@@ -61,28 +62,28 @@
 							<span>Objets trouvés </span> 
 						</a>
 						<ul class="sub-menu">
-							<li><a href="form_elements.html">Liste des objets trouvés</a></li>
-							<li><a href="form_plugins.html"> Déclarer un objet trouvé</a></li>
+							<li><a href="{{ route('found-items.index') }}">Liste des objets trouvés</a></li>
+							<li><a href="{{ route('found-items.createAdmin') }}"> Déclarer un objet trouvé</a></li>
 						</ul>
 					</li>
 					<li class="has-sub">
 						<a href="javascript:;">
 							<b class="caret"></b>
 							<i class="fa fa-paint-brush"></i>
-							<span>Ajouter</span>
+							<span>Catégories/Sub</span>
 						</a>
 						<ul class="sub-menu">
 							<li class="has-sub">
-                            <a href="javascript:;"><b class="caret"></b> Catégories</a>
+                            <a href="javascript:;"><b class="caret"></b>Liste</a>
                                 <ul class="sub-menu">
 									<li><a href="{{ route('categories.index') }}">Liste des catégories</a></li>
-									<li><a href="{{ route('categories.create') }}">Ajouter une catégorie</a></li>
 								</ul>
                             </li>
 							<li class="has-sub">
-								<a href="javascript:;"><b class="caret"></b> Sous catégories</a>
+								<a href="javascript:;"><b class="caret"></b> Ajouter</a>
 								<ul class="sub-menu">
-                                <li><a href="{{ route('subcategories.create') }}">Ajouter une sous-catégorie</a></li>
+									<li><a href="{{ route('categories.create') }}">Ajouter une catégorie</a></li>
+									<li><a href="{{ route('subcategories.create') }}">Ajouter une sous-catégorie</a></li>
 								</ul>
 							</li>
 						</ul>

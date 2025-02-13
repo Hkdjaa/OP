@@ -44,26 +44,26 @@
                                <p class="success-message">{{ session('success') }}</p>
                               @endif
 
-                             <form action="{{ route('objets_trouves.store') }}" method="POST" enctype="multipart/form-data" class="custom-form contact-form" role="form">
+                             <form action="{{ route('found-items.store') }}" method="POST" enctype="multipart/form-data" class="custom-form contact-form" role="form">
                               @csrf
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-floating">
-                                            <input type="text" name="nom_objet" id="nom_objet" class="form-control" placeholder="Nom" value="{{ old('name') }}" required>
+                                            <input type="text" id="name" name="name" class="form-control" placeholder="Nom" value="{{ old('name') }}" required>
                                         
                                             <label for="name">Nom de l'objet</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-floating">
-                                            <input type="date" id="date_trouvee" name="date_trouvee" value="{{ old('date_lost') }}" max="{{ date('Y-m-d') }}" class="form-control" required>
+                                            <input type="date" id="date_found" name="date_found" value="{{ old('date_lost') }}" max="{{ date('Y-m-d') }}" class="form-control" required>
                                             
-                                            <label for="date_lost">Date de la trouvaille</label>
+                                            <label for="date_found">Date de la trouvaille</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-12">
                                         <div class="form-floating">
-                                            <input type="text" id="lieu_trouve" class="form-control" name="lieu_trouve" value="{{ old('place') }}" placeholder="Lieu" required>
+                                            <input type="text" id="place" name="place" class="form-control" value="{{ old('place') }}" placeholder="Lieu" required>
                                             
                                             <label for="place">Lieu de la trouvaille</label>
                                         </div>
@@ -79,7 +79,7 @@
 
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-floating">
-                                            <select id="categorie_id" name="categorie_id" class="form-control" required>
+                                            <select id="category_id" name="category_id" class="form-control" required>
                                             <option value="">Choisir une catégorie</option>
                                                 @foreach($categories as $category)
                                           <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -114,7 +114,6 @@
 
                                         <div class="col-lg-4 col-12 ms-auto">
                                         <button type="submit" class="form-control">Publier</button>
-                                        <button type="submit" name="action" value="save_and_show" class="btn btn-secondary">Ajouter et afficher</button>
                                     </div>
                                 </div>
                             </form>

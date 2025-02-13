@@ -86,43 +86,6 @@
 				<!-- end col-6 -->
 			</div>
 			<!-- end row -->
-
-         
-<div class="container mt-5">
-        <h1 class="mb-4">Sous-catégories de "{{ $category->name }}"</h1>
-
-        <!-- Afficher le message de succès -->
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <!-- Liste des sous-catégories -->
-        @if($category->subcategories->isNotEmpty())
-            <ul class="list-group">
-                @foreach($category->subcategories as $subcategory)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ $subcategory->name }}
-                        <!-- Supprimer une sous-catégorie -->
-                        <form action="{{ route('subcategories.destroy', $subcategory->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette sous-catégorie ?')">
-                                Supprimer
-                            </button>
-                        </form>
-                    </li>
-                @endforeach
-            </ul>
-        @else
-            <p>Aucune sous-catégorie trouvée pour cette catégorie.</p>
-        @endif
-
-        <!-- Bouton pour retourner à la liste des catégories -->
-        <a href="{{ route('categories.index') }}" class="btn btn-secondary mt-4">Retour à la liste des catégories</a>
-        <a href="{{ route('subcategories.create') }}" class="btn btn-primary">Ajouter une sous-catégorie</a>
-        <a href="{{ route('admin') }}" class="btn btn-primary">Administration</a>
     </div>
     </div>
     <!-- end #content -->
